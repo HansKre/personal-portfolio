@@ -1,4 +1,8 @@
 import React from "react";
+import Fade from 'react-reveal/Fade';
+
+import images from '../data/dummyImages.json';
+import LazyImage from "./LazyImage";
 
 const Content = ({ styles }) => {
     const dummyPost = {
@@ -16,14 +20,44 @@ const Content = ({ styles }) => {
         paddingLeft: styles.showSidebar ? styles.sidebarWidth + 20 : 20
     };
 
+    /* try out the animations here: https://www.react-reveal.com/examples/common/fade/ */
     return (
         <div style={contentStyle}>
             {posts.map((post, i) => {
+                let left = i % 2 === 0;
                 return (
-                    <div key={i} style={{ marginBottom: 40 }}>
-                        <h2 style={{ marginBottom: 0 }}>{post.title}</h2>
-                        <p>{post.summary}</p>
-                    </div>
+                    <>
+                        <Fade left={left} right={!left}>
+                            <div key={i} style={{ marginBottom: 40 }}>
+                                <h2 style={{ marginBottom: 0 }}>{post.title}</h2>
+                                <p>{post.summary}</p>
+                            </div>
+                        </Fade>
+                        {i < images.length
+                            ? (
+                                <LazyImage
+                                    key={images[i].id}
+                                    src={images[i].urls.regular}
+                                    thumb={images[i].urls.thumb}
+                                    height={images[i].height}
+                                    width={images[i].width}
+                                    alt={images[i].alt_description}
+                                    animate={i} /* only every second image is animated. This avoids that the animation effect wears off too quickly. */
+                                />
+                            )
+                            : (
+                                <LazyImage
+                                    key={images[images.length - 1].id}
+                                    src={images[images.length - 1].urls.regular}
+                                    thumb={images[images.length - 1].urls.thumb}
+                                    height={images[images.length - 1].height}
+                                    width={images[images.length - 1].width}
+                                    alt={images[images.length - 1].alt_description}
+                                    animate={i}
+                                />
+                            )
+                        }
+                    </>
                 );
             })}
         </div>

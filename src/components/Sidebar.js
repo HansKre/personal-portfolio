@@ -6,7 +6,8 @@ const Sidebar = ({ menuItems, styles }) => {
         width: styles.sidebarWidth,
         position: "fixed",
         backgroundColor: "#333",
-        paddingTop: 40
+        paddingTop: 40,
+        zIndex: 999
     };
 
     const menuItemStyle = {

@@ -1,3 +1,22 @@
+# HansKre's Personal Portfolio
+
+## Noteable Tutorials
+
+### Responsive Design
+
+1. [How to Build Fully Responsive React Apps with Nothing but Inline Styles and JavaScript](https://codeburst.io/how-to-build-fully-responsive-react-apps-with-nothing-but-inline-styles-and-javascript-242c091b6ba1). This served as the template for this site. Very nice guide for how to implement different layouts based on screen size using inline-styles. Definitely highly recommended!
+
+1. Amazing guide for [Progressively Loading Images In React](https://medium.com/frontend-digest/progressively-loading-images-in-react-107cb075417a)
+
+### Animations
+
+1. [React Transition Group and CSSTransition](http://reactcommunity.org/react-transition-group/css-transition)
+
+1. [Many examples for react-reveal](https://www.react-reveal.com/examples/common/fade/). It is interesting to see that even though React Transition Group is the project with more stars on GitHub, [react-reveal has grown massively according to npm-trends](https://www.npmtrends.com/react-animate-on-scroll-vs-react-reveal-vs-react-scrollreveal-vs-react-track-vs-scrollreveal).
+
+[Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

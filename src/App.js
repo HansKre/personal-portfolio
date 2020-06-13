@@ -59,6 +59,15 @@ const App = () => {
     menuItems.push({ icon: `⚙`, text: "Settings" });
   }
 
+  /* It turns out that we cannot work with react-reveal and
+  position: fixed;
+  The reason is that the animation component from react-reaveal,
+  like <Reveal>...</Reveal> are wrapping the content to animate in
+  an own div. This causes the position:fixed; to break as in:
+  they disappear out of the screen on scrolling.
+  Hence, we are using react-transition-group with the position:fixed;
+  components, and the lot more convenient react-reveal for the rest.
+  */
   return (
     <div
       style={{
@@ -67,24 +76,30 @@ const App = () => {
         position: 'relative'
       }}
     >
-      <CSSTransition
-        in={styles.showSidebar}
-        timeout={300}
-        classNames="responsive"
-        unmountOnExit
-        appear
-      >
-        <Sidebar menuItems={menuItems} styles={styles} />
-      </CSSTransition>
-      <CSSTransition
-        in={!styles.showSidebar}
-        timeout={300}
-        classNames="responsive"
-        unmountOnExit
-        appear
-      >
-        <TopBar styles={styles} />
-      </CSSTransition>
+      {/* CSSTransition's 'in=' property will take care of
+      the decision whether or not to display the component at all.
+      But with the 'appear' property, the component is rendered
+      on first load and then removed immediately. That's not nice.*/}
+      {styles.showSidebar &&
+        <CSSTransition
+          in={styles.showSidebar}
+          timeout={300}
+          classNames="responsive"
+          unmountOnExit
+          appear
+        >
+          <Sidebar menuItems={menuItems} styles={styles} />
+        </CSSTransition>}
+      {!styles.showSidebar &&
+        <CSSTransition
+          in={!styles.showSidebar}
+          timeout={300}
+          classNames="responsive"
+          unmountOnExit
+          appear
+        >
+          <TopBar styles={styles} />
+        </CSSTransition>}
       <CSSTransition
         in={true}
         timeout={300}
@@ -94,15 +109,16 @@ const App = () => {
       >
         <Content styles={styles} />
       </CSSTransition>
-      <CSSTransition
-        in={!styles.showSidebar}
-        timeout={300}
-        classNames="responsive"
-        unmountOnExit
-        appear
-      >
-        <FooterMenu key='footerMenu' menuItems={menuItems} styles={styles} />
-      </CSSTransition>
+      {!styles.showSidebar &&
+        <CSSTransition
+          in={!styles.showSidebar}
+          timeout={300}
+          classNames="responsive"
+          unmountOnExit
+          appear
+        >
+          <FooterMenu key='footerMenu' menuItems={menuItems} styles={styles} />
+        </CSSTransition>}
     </div>
   );
 };
