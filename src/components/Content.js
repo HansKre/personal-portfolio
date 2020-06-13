@@ -17,14 +17,25 @@ const Content = ({ styles }) => {
         paddingTop: styles.showSidebar ? 20 : styles.topBarHeight + 20,
         paddingRight: 20,
         paddingBottom: styles.showSidebar ? 20 : styles.footerMenuHeight + 20,
-        paddingLeft: styles.showSidebar ? styles.sidebarWidth + 20 : 20
+        paddingLeft: styles.showSidebar ? styles.sidebarWidth + 20 : 20,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center'
     };
+
+    console.log(images[0].id);
 
     /* try out the animations here: https://www.react-reveal.com/examples/common/fade/ */
     return (
         <div style={contentStyle}>
             {posts.map((post, i) => {
                 let left = i % 2 === 0;
+                let id = '0';
+                if (i < images.length) {
+                    id = images[i].id;
+                } else {
+                    id = images[images.length - 1].id;
+                }
                 return (
                     <>
                         <Fade left={left} right={!left}>
@@ -36,13 +47,14 @@ const Content = ({ styles }) => {
                         {i < images.length
                             ? (
                                 <LazyImage
-                                    key={images[i].id}
+                                    key={id}
                                     src={images[i].urls.regular}
                                     thumb={images[i].urls.thumb}
                                     height={images[i].height}
                                     width={images[i].width}
                                     alt={images[i].alt_description}
                                     animate={i} /* only every second image is animated. This avoids that the animation effect wears off too quickly. */
+                                    availableWidth={window.innerWidth - contentStyle.paddingRight - contentStyle.paddingLeft}
                                 />
                             )
                             : (

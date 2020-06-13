@@ -1,3 +1,5 @@
+/* CSS definitions for react-transition-group animations */
+
 .responsive-enter, .responsive-appear {
     opacity: 0;
     transform: scale(0.9);
