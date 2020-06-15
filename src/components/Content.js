@@ -23,23 +23,19 @@ const Content = ({ styles }) => {
         justifyContent: 'center'
     };
 
-    console.log(images[0].id);
+    function uid() {
+        return Math.floor(Math.random() * 10000000);
+    }
 
     /* try out the animations here: https://www.react-reveal.com/examples/common/fade/ */
     return (
         <div style={contentStyle}>
             {posts.map((post, i) => {
                 let left = i % 2 === 0;
-                let id = '0';
-                if (i < images.length) {
-                    id = images[i].id;
-                } else {
-                    id = images[images.length - 1].id;
-                }
                 return (
-                    <>
-                        <Fade left={left} right={!left}>
-                            <div key={i} style={{ marginBottom: 40 }}>
+                    <React.Fragment key={uid()}>
+                        <Fade key={uid()} left={left} right={!left}>
+                            <div style={{ marginBottom: 40 }}>
                                 <h2 style={{ marginBottom: 0 }}>{post.title}</h2>
                                 <p>{post.summary}</p>
                             </div>
@@ -47,29 +43,32 @@ const Content = ({ styles }) => {
                         {i < images.length
                             ? (
                                 <LazyImage
-                                    key={id}
+                                    key={uid()}
+                                    id={images[i].id}
                                     src={images[i].urls.regular}
                                     thumb={images[i].urls.thumb}
                                     height={images[i].height}
                                     width={images[i].width}
                                     alt={images[i].alt_description}
-                                    animate={i} /* only every second image is animated. This avoids that the animation effect wears off too quickly. */
+                                    animate={i} /* let component pick the animation based on index */
                                     availableWidth={window.innerWidth - contentStyle.paddingRight - contentStyle.paddingLeft}
                                 />
                             )
                             : (
                                 <LazyImage
-                                    key={images[images.length - 1].id}
+                                    key={uid()}
+                                    id={images[images.length - 1].id + uid()}
                                     src={images[images.length - 1].urls.regular}
                                     thumb={images[images.length - 1].urls.thumb}
                                     height={images[images.length - 1].height}
                                     width={images[images.length - 1].width}
                                     alt={images[images.length - 1].alt_description}
                                     animate={i}
+                                    availableWidth={window.innerWidth - contentStyle.paddingRight - contentStyle.paddingLeft}
                                 />
                             )
                         }
-                    </>
+                    </React.Fragment>
                 );
             })}
         </div>
